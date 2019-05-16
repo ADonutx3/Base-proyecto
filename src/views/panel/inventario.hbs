@@ -1,0 +1,125 @@
+<div class="jumbotron mt-4">
+          <h2>Administrador de inventario</h2>
+          <p>Seccion para ingresar las compras para el negocio</p>
+        <br>
+        <style>
+          #error {
+            color: red;
+          }
+
+        </style>
+        <p id="error"></p>
+        <form id="form">
+          <input type="text" id="producto" name="" placeholder="Producto">
+          <input type="text" id="precio" name="" placeholder="Precio">
+          <input type="text" id="cantidad" name="" placeholder="Cantidad">
+          </form>
+          <br>
+          <button class="btn btn-dark" onclick="agregar()">Agregar</button>
+          <br>
+        <div class="">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo">
+            </tbody>
+          </table>
+          <br>
+          <button id="guardar"class="btn btn-dark">guardar</button>
+        </div>
+    </div>    
+    <script type="text/javascript">
+
+      var inventario ={
+        producto: 'producto',
+        precio: 'precio',
+        cantidad: 'cantidad'
+      }
+
+      var prueba = {
+
+          producto: '',
+          precio:'',
+          cantidad:''
+
+      }
+
+
+      function agregar(){
+
+      var producto = document.getElementById('producto').value;
+      var precio = document.getElementById('precio').value;
+      var cantidad = document.getElementById('cantidad').value;
+      var tbody = document.getElementById('tabla-cuerpo');
+      var error = document.getElementById('error');
+
+      if(producto == ""){
+        error.innerHTML = "ingresar un producto"
+      } else {
+        error.innerHTML = "";
+        if (precio == 0){
+          error.innerHTML = "ingresar un precio"
+        }else {
+          error.innerHTML = "";
+          if(cantidad == 0){
+            error.innerHTML = "ingresa una cantidad"
+          }
+            else{
+
+             inventario = {
+              producto: producto,
+              precio: precio,
+              cantidad: cantidad
+             } 
+
+              const returnedTarget = Object.assign(prueba, inventario);
+
+              console.log(returnedTarget);
+
+              
+
+              error.innerHTML = "";
+              var fila="<tr><td>"+ producto +"</td><td>"+precio+"</td><td>"+cantidad+"</td><td>";
+
+              var btn = document.createElement("TR");
+              btn.innerHTML=fila;
+              document.getElementById("tabla-cuerpo").appendChild(btn);
+              document.getElementById("form").reset();
+            }
+          }
+        }
+      }
+
+
+                  
+
+
+
+
+      var btnGuardar = document.getElementById('guardar').addEventListener('click', ()=>{
+
+
+        $.ajax({ 
+          type: 'POST',
+          url: 'http://localhost:4000/inventario/guardar',
+          data: prueba,
+          success: function(respuesta) {
+          console.log("guardadopapah");
+          },
+          error: function() {
+          console.log("No se ha podido obtener la información");
+          }
+        });
+
+      })
+
+
+      agregar();
+
+
+     </script>

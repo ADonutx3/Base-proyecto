@@ -1,0 +1,27 @@
+
+	
+    <div class="jumbotron">
+    <form class="form-wrapper">
+    <input type="text" id="search" placeholder="">
+    
+    <select id="producto" onchange="ShowSelected();" type="" name="producto">
+    	<option> Cafe expreso </option>
+    	<option> Caguamas </option>
+    </select>
+    <script type="text/javascript">
+    	function ShowSelected() {
+                var combo = document.getElementById("producto");
+                var selected = combo.options[combo.selectedIndex].text;
+                alert("HA SELECCIONADO:     " +selected);   
+
+
+                            	}
+    </script>
+
+
+    <button type="submit"id="submit" class="btn btn-dark">Agregar</button>
+	</form>
+</div>
+
+</body>
+</html>
